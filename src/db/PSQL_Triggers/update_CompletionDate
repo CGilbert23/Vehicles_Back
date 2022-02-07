@@ -1,0 +1,42 @@
+/*COMPLETION DATE VALUE (ALL COLS = "COMPLETE")*/
+
+create or replace function update_completion_date()
+returns trigger
+as $$
+
+
+BEGIN
+    IF (new.recruiterscreen_status = 'Complete' OR old.recruiterscreen_status = 'Complete') 
+	AND (new.testing_status = 'Complete' OR old.testing_status = 'Complete')
+	AND (new.interview_status = 'Complete' OR old.interview_status = 'Complete')
+	AND (new.backgroundcheck_status = 'Complete' OR old.backgroundcheck_status = 'Complete')
+	AND (new.drugscreen_status = 'Complete' OR old.drugscreen_status = 'Complete')
+	AND (new.paperwork_status = 'Complete' OR old.paperwork_status = 'Complete')
+	THEN
+	new.completion_date = current_date;
+	END IF;
+    
+    IF (old.recruiterscreen_status = 'Complete') 
+	AND (old.testing_status = 'Complete')
+	AND (old.interview_status = 'Complete')
+	AND (old.backgroundcheck_status = 'Complete')
+	AND (old.drugscreen_status = 'Complete')
+	AND (old.paperwork_status = 'Complete')
+    THEN
+    new.completion_date = old.completion_date;
+    END IF;
+    
+    
+	return New;
+end;
+
+$$ language plpgsql;
+
+/*Set Function*/
+
+create trigger update_completion_date
+before update
+on applicants
+for each row
+execute procedure update_completion_date();
+

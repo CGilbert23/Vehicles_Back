@@ -1,0 +1,47 @@
+
+/*SECTION DATE VALUE (SECTION DATE = 'COMPLETE')*/
+
+create or replace function update_section_date()
+returns trigger
+as $$
+
+
+BEGIN
+	IF new.interview_status = 'Complete' AND old.interview_status != 'Complete'
+	THEN new.interview_completion = current_date;
+	END IF;
+    
+    IF new.recruiterscreen_status = 'Complete' AND old.recruiterscreen_status != 'Complete'
+	THEN new.recruiterscreen_completion = current_date;
+	END IF;
+    
+    IF new.testing_status = 'Complete' AND old.testing_status != 'Complete'
+	THEN new.testing_completion = current_date;
+	END IF;
+	
+     IF new.backgroundcheck_status = 'Complete' AND old.backgroundcheck_status != 'Complete'
+	THEN new.backgroundcheck_completion = current_date;
+	END IF;
+    
+    IF new.drugscreen_status = 'Complete' AND old.drugscreen_status != 'Complete'
+	THEN new.drugscreen_completion = current_date;
+	END IF;
+    
+    IF new.paperwork_status = 'Complete' AND old.paperwork_status != 'Complete'
+	THEN new.paperwork_completion = current_date;
+	END IF;
+	
+    
+	return New;
+end
+
+$$ language plpgsql;
+
+
+/*Set Function*/
+
+create trigger update_section_date
+before update
+on applicants
+for each row
+execute procedure update_section_date();

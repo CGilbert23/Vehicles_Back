@@ -1,0 +1,10 @@
+Insert into vehicles (location,stock, year, make, model, notes) VALUES 
+('Annex','F9999','2016','Ford','Explorer','No Notes'),
+('Annex','F8765','2018','Ford','Explorer','No Notes'),
+('Annex','F99768','2017','Ford','Escape','No Notes'),
+('Detail','F9968','2015','Ford','Mustang','No Notes'),
+('Detail','F9321','2016','Ford','Explorer','No Notes'),
+('Detail','F9567','2019','Ford','Explorer','No Notes'),
+('Detail','F9897','2021','Ford','Explorer','No Notes'),
+('Detail','F9678','2016','Ford','Mustang','No Notes'),
+('Detail','F9980','2016','Ford','Escape','No Notes')

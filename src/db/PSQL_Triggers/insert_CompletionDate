@@ -1,0 +1,28 @@
+/*COMPLETION DATE (ALL COLS = 'COMPLETE)*/
+
+create or replace function insert_completion_date()
+returns trigger
+as $$
+
+BEGIN
+	IF new.recruiterscreen_status = 'Complete' 
+	AND new.testing_status = 'Complete' 
+	AND new.interview_status = 'Complete' 
+	AND new.backgroundcheck_status = 'Complete'
+	AND new.drugscreen_status = 'Complete'
+	AND new.paperwork_status = 'Complete'
+	THEN
+	new.completion_date = current_date;
+	END IF;
+	return New;
+end;
+
+$$ language plpgsql;
+
+
+/*Set Function*/
+create trigger insert_completion_date
+before insert
+on applicants
+for each row
+execute procedure insert_completion_date();

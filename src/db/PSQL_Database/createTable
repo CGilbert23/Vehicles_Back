@@ -1,0 +1,42 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- Table: public.vehciles
+DROP TABLE IF EXISTS public.vehicles;
+CREATE TABLE IF NOT EXISTS public.vehicles (
+    vehicle_id uuid NOT NULL DEFAULT uuid_generate_v4(),
+	location character varying COLLATE pg_catalog."default",
+	stock character varying COLLATE pg_catalog."default",
+	year character varying COLLATE pg_catalog."default",
+	make character varying COLLATE pg_catalog."default",
+	model character varying COLLATE pg_catalog."default",
+	notes character varying COLLATE pg_catalog."default",
+
+    date_in date DEFAULT CURRENT_DATE,
+	
+	
+	annex_completion date,
+	autoexpress_completion date,
+	detail_completion date,
+	holding_completion date,
+	recon_completion date,
+	service_completion date,
+	torro_completion date,
+	vendor_completion date,
+
+	annex_var numeric GENERATED ALWAYS AS (annex_completion - date_in) STORED,
+	autoexpress_var numeric GENERATED ALWAYS AS (annex_completion - date_in) STORED,
+	detail_var numeric GENERATED ALWAYS AS (annex_completion - date_in) STORED,
+	holding_var numeric GENERATED ALWAYS AS (annex_completion - date_in) STORED,
+	recon_var numeric GENERATED ALWAYS AS (annex_completion - date_in) STORED,
+	service_var numeric GENERATED ALWAYS AS (annex_completion - date_in) STORED,
+	torro_var numeric GENERATED ALWAYS AS (annex_completion - date_in) STORED,
+	vendor_var numeric GENERATED ALWAYS AS (annex_completion - date_in) STORED,
+	
+	
+    CONSTRAINT vehicles_pkey PRIMARY KEY (vehicle_id)
+) TABLESPACE pg_default;
+
+ALTER TABLE
+    IF EXISTS vehicles OWNER to postgres;
+
+
